@@ -19,3 +19,5 @@ jobs:
       - run: pip install requests playwright
       - run: python -m playwright install --with-deps chromium
       - run: python check.py
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
