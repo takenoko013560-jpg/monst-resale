@@ -7,20 +7,6 @@ from playwright.async_api import async_playwright
 URL = "https://event.xflag.com/events/dreamdaze4/re-sale-tickets/274"
 WEBHOOK = os.environ.get("DISCORD_WEBHOOK", "")
 
-# ここは後で調整しやすいようにしてあります
-POSITIVE_PATTERNS = [
-    r"購入する",
-    r"申込",
-    r"受付中",
-    r"出品中",
-]
-
-NEGATIVE_PATTERNS = [
-    r"出品はありません",
-    r"現在.*ありません",
-    r"該当.*ありません",
-    r"リセール.*ありません",
-]
 
 def has_any(patterns, text):
     return any(re.search(p, text, re.IGNORECASE | re.DOTALL) for p in patterns)
