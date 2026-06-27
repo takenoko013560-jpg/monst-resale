@@ -41,7 +41,6 @@ async def main():
 
     negative = "購入できるリセールチケットがありません。" in text
 
-    print(f"positive={positive}")
     print(f"negative={negative}")
 
     # 「出品ありっぽい」かつ「出品なし文言がない」なら通知
