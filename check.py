@@ -39,14 +39,13 @@ async def main():
     print(text[:3000])
     print("VISIBLE_TEXT_END")
 
-    positive = has_any(POSITIVE_PATTERNS, text)
-    negative = has_any(NEGATIVE_PATTERNS, text)
+    negative = "購入できるリセールチケットがありません。" in text
 
     print(f"positive={positive}")
     print(f"negative={negative}")
 
     # 「出品ありっぽい」かつ「出品なし文言がない」なら通知
-    if positive and not negative:
+    if not negative:
         message = f"🎫 モンストTICKETでリセール出品の可能性があります\n{URL}"
         if WEBHOOK:
             requests.post(WEBHOOK, json={"content": message}, timeout=20)
