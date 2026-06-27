@@ -1,0 +1,21 @@
+name: Check Monst Ticket
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/5 * * * *"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: pip install requests playwright
+      - run: python -m playwright install --with-deps chromium
+      - run: python check.py
