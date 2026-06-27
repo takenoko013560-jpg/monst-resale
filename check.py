@@ -9,5 +9,18 @@ response = requests.get(
     }
 )
 
+html = response.text
+
 print("Status:", response.status_code)
-print(response.text[:3000])
+
+keywords = [
+    "リセール",
+    "出品",
+    "購入",
+    "チケット",
+    "販売",
+    "SOLD",
+]
+
+for keyword in keywords:
+    print(f"{keyword}: {keyword in html}")
