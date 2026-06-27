@@ -1,10 +1,9 @@
 name: Check Monst Ticket
 
 on:
-  workflow_dispatch:
   schedule:
     - cron: "*/5 * * * *"
-
+  workflow_dispatch:
 jobs:
   check:
     runs-on: ubuntu-latest
