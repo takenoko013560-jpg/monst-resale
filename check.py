@@ -1,25 +1,58 @@
+import os
+import re
+import asyncio
 import requests
+from playwright.async_api import async_playwright
 
-url = "https://event.xflag.com/events/dreamdaze4/re-sale-tickets/274"
+URL = "https://event.xflag.com/events/dreamdaze4/re-sale-tickets/274"
+WEBHOOK = os.environ.get("DISCORD_WEBHOOK", "")
 
-response = requests.get(
-    url,
-    headers={"User-Agent": "Mozilla/5.0"}
-)
-
-html = response.text
-
-targets = [
-    "現在出品",
-    "出品されて",
-    "リセールチケット",
-    "受付終了",
-    "販売終了",
-    "予定枚数終了",
-    "購入する",
-    "申込み",
+# ここは後で調整しやすいようにしてあります
+POSITIVE_PATTERNS = [
+    r"購入する",
+    r"申込",
+    r"受付中",
+    r"出品中",
 ]
 
-for target in targets:
-    if target in html:
-        print(f"FOUND: {target}")
+NEGATIVE_PATTERNS = [
+    r"出品はありません",
+    r"現在.*ありません",
+    r"該当.*ありません",
+    r"リセール.*ありません",
+]
+
+def has_any(patterns, text):
+    return any(re.search(p, text, re.IGNORECASE | re.DOTALL) for p in patterns)
+
+async def main():
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=True)
+        page = await browser.new_page(locale="ja-JP")
+        await page.goto(URL, wait_until="domcontentloaded", timeout=60000)
+        await page.wait_for_timeout(3000)
+
+        text = await page.locator("body").inner_text()
+        await browser.close()
+
+    print("VISIBLE_TEXT_START")
+    print(text[:3000])
+    print("VISIBLE_TEXT_END")
+
+    positive = has_any(POSITIVE_PATTERNS, text)
+    negative = has_any(NEGATIVE_PATTERNS, text)
+
+    print(f"positive={positive}")
+    print(f"negative={negative}")
+
+    # 「出品ありっぽい」かつ「出品なし文言がない」なら通知
+    if positive and not negative:
+        message = f"🎫 モンストTICKETでリセール出品の可能性があります\n{URL}"
+        if WEBHOOK:
+            requests.post(WEBHOOK, json={"content": message}, timeout=20)
+        print("DISCORD_SENT")
+    else:
+        print("NO_ALERT")
+
+if __name__ == "__main__":
+    asyncio.run(main())
