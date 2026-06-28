@@ -26,7 +26,12 @@ async def main():
     print(text[:3000])
     print("VISIBLE_TEXT_END")
 
-    negative = "購入できるリセールチケットがありません。" in text
+    #negative = "購入できるリセールチケットがありません。" in text
+    negative = (
+    "購入できるリセールチケットがありません。" in text
+    and "すべて" in text
+    and "イベント詳細に戻る" in text
+    )
 
     print(f"negative={negative}")
 
