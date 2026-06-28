@@ -36,6 +36,7 @@ async def main():
         if WEBHOOK:
             requests.post(WEBHOOK, json={"content": message}, timeout=20)
         print("DISCORD_SENT")
+        raise Exception("RESALE FOUND")
     else:
         print("NO_ALERT")
 
