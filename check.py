@@ -26,7 +26,7 @@ async def main():
     print(text[:3000])
     print("VISIBLE_TEXT_END")
 
-    #negative = "購入できるリセールチケットがありません。" in text
+    negative1 = "購入できるリセールチケットがありません。" in text
     negative = (
     "購入できるリセールチケットがありません。" in text
     and "すべて" in text
@@ -44,6 +44,9 @@ async def main():
         raise Exception("RESALE FOUND")
     else:
         print("NO_ALERT")
+
+    if negative1:
+        print ("1")
 
 
 if __name__ == "__main__":
