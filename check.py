@@ -1,22 +1,17 @@
 import os
-import re
 import asyncio
 import requests
 from playwright.async_api import async_playwright
 
 URL = "https://event.xflag.com/events/dreamdaze4/re-sale-tickets/274"
-WEBHOOK = os.environ.get("DISCORD_WEBHOOK", "")
-
-
-def has_any(patterns, text):
-    return any(re.search(p, text, re.IGNORECASE | re.DOTALL) for p in patterns)
+WEBHOOK = os.environ.get("DISCORD_WEBHOOK", "
 
 async def main():
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
         page = await browser.new_page(locale="ja-JP")
         await page.goto(URL, wait_until="domcontentloaded", timeout=60000)
-        await page.wait_for_timeout(3000)
+        await page.wait_for_timeout(1000)
 
         text = await page.locator("body").inner_text()
         await browser.close()
