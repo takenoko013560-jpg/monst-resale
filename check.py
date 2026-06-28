@@ -36,7 +36,9 @@ async def main():
     print(f"negative={negative}")
 
     # 「出品ありっぽい」かつ「出品なし文言がない」なら通知
-    if not negative:
+    if negative:
+        print ("NO_ALERT")
+    elif not negative:
         message = f"🎫 モンストTICKETでリセール出品の可能性があります\n{URL}"
         if WEBHOOK:
             requests.post(WEBHOOK, json={"content": message}, timeout=20)
