@@ -32,7 +32,11 @@ async def main():
     and "すべて" in text
     and "イベント詳細に戻る" in text
     )
-    positive = "件表示" in text or "¥" in text or "￥" in text
+    positive = (
+        "件表示" in text 
+        or "¥" in text 
+        or "￥" in text
+    )
 
     print(f"negative={negative}")
     #print(f"negative1={negative1}")
