@@ -26,20 +26,21 @@ async def main():
     print(text[:3000])
     print("VISIBLE_TEXT_END")
 
-    negative1 = "購入できるリセールチケットがありません。" in text
+    #negative1 = "購入できるリセールチケットがありません。" in text
     negative = (
     "購入できるリセールチケットがありません。" in text
     and "すべて" in text
     and "イベント詳細に戻る" in text
     )
+    positive = "件表示" in text
 
     print(f"negative={negative}")
-    print(f"negative1={negative1}")
+    #print(f"negative1={negative1}")
 
     # 「出品ありっぽい」かつ「出品なし文言がない」なら通知
     if negative:
         print ("NO_ALERT")
-    elif not negative:
+    elif not negative and positive:
         message = f"🎫 モンストTICKETでリセール出品の可能性があります\n{URL}"
         if WEBHOOK:
             requests.post(WEBHOOK, json={"content": message}, timeout=20)
@@ -48,8 +49,8 @@ async def main():
     else:
         print("NO_ALERT")
 
-    if not negative1:
-        raise Exception("negative1")
+    #if not negative1:
+        #raise Exception("negative1")
 
 
 if __name__ == "__main__":
