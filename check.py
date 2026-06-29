@@ -34,6 +34,7 @@ async def main():
     )
 
     print(f"negative={negative}")
+    print(f"negative1={negative1}")
 
     # 「出品ありっぽい」かつ「出品なし文言がない」なら通知
     if negative:
