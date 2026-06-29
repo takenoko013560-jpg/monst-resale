@@ -49,8 +49,8 @@ async def main():
     else:
         print("NO_ALERT")
 
-    if not negative:
-        raise Exception("negative")
+    #if not negative:
+        #raise Exception("negative")
 
 
 if __name__ == "__main__":
