@@ -58,7 +58,7 @@ async def check_one(page, item):
     print(f"positive={positive}")
 
     if negative:
-        return item
+        return None
 
     if positive:
         return item
