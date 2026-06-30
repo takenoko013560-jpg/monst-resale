@@ -58,12 +58,12 @@ async def check_one(page, item):
     print(f"positive={positive}")
 
     if negative:
-        return None
+        return item
 
     if positive:
         return item
 
-    return None
+    return item
 
 
 async def main():
@@ -84,7 +84,7 @@ async def main():
         await browser.close()
 
     if found_items:
-        message = "🎫 モンストTICKETでリセール出品されました\n"
+        message = "テスト️📝 🎫 モンストTICKETでリセール出品されました\n"
 
         for item in found_items:
             message += f"{item['name']}\n{item['url']}\n\n"
