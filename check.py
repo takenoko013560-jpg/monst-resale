@@ -45,7 +45,7 @@ async def main():
     if negative:
         print ("NO_ALERT")
     elif (not negative) and positive:
-        message = f"🎫 モンストTICKETでリセール出品の可能性があります\n{URL}"
+        message = f"🎫 2DAYSチケットがリセール出品されました\n{URL}"
         if WEBHOOK:
             requests.post(WEBHOOK, json={"content": message}, timeout=20)
         print("DISCORD_SENT")
